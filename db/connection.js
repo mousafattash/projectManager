@@ -6,8 +6,8 @@ import { asyncHandler } from "../src/middleware/catchError.js";
 dotenv.config();
 // console.log("DB_PASS:", process.env.DB_PASS);
 
-export const sequelize = new Sequelize(freedb_projectsmanager, freedb_mousa, "pmfwG4G*XHasBG?", {
-  host: sql.freedb.tech,
+export const sequelize = new Sequelize("freedb_projectsmanager", "freedb_mousa", "pmfwG4G*XHasBG?", {
+  host: "sql.freedb.tech",
   dialect: "mysql",
 });
 
