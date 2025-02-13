@@ -2,6 +2,7 @@
 import express from "express";
 import { syncDB } from "./db/models/index.js";
 import authRoutes from "./src/modules/auth/auth.route.js";
+import projectRoutes from "./src/modules/project/project.route.js"
 import { asyncHandler } from "./src/middleware/catchError.js";
 
 const app = express();
@@ -11,7 +12,7 @@ app.use(express.json());
 
 // Use routes
 app.use("/users", authRoutes);
-// app.use("/projects", projectRoutes);
+app.use("/projects", projectRoutes);
 // app.use("/tasks", taskRoutes);
 
 const startServer = asyncHandler(async () => {

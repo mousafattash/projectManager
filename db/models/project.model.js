@@ -14,11 +14,25 @@ const Project = sequelize.define("Project", {
     allowNull: false,
   },
   description: {
-    type: DataTypes.TEXT,
+    type: DataTypes.STRING,
+    allowNull: true,
   },
-}, {
-  tableName: "projects",
-  timestamps: false,
+  dueDate: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  priority: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  userId: { 
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "users", 
+      key: "id",
+    },
+  },
 });
 
 // Each project/s belongs to a user

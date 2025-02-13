@@ -25,15 +25,11 @@ export const register =asyncHandler( async (req, res) => {
   res.status(201).json({ message: "User registered successfully" });
 });
 
-export const login = async (req, res) => {
-  const { error } = loginValidation(req.body);
-  if (error) {
-    return res.status(400).json({ message: error.details.map((err) => err.message) });
-  }
 
+export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-
   const user = await User.findOne({ where: { email } });
+
   if (!user) {
     return res.status(400).json({ message: "Invalid credentials" });
   }
@@ -43,7 +39,10 @@ export const login = async (req, res) => {
     return res.status(400).json({ message: "Invalid credentials" });
   }
 
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  // Create and sign JWT token with the user's ID
+  const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, {
+    expiresIn: "1h",  // Optional: Set the token expiration time
+  });
 
-  res.status(200).json({ message: "Logged in successfully", token });
-};
+  res.json({ message: "Login successful", token });
+});
