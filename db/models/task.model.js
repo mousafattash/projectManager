@@ -1,4 +1,4 @@
-//db/models/task.model.js
+// db/models/task.model.js
 import { DataTypes } from "sequelize";
 import { sequelize } from "../connection.js";
 import Project from "./project.model.js";
@@ -19,10 +19,16 @@ const Task = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    // Added priority column
+    priority: {
+      type: DataTypes.ENUM("Low", "Medium", "High"),
+      allowNull: true,
+      defaultValue: "Medium",
+    },
     status: {
       type: DataTypes.ENUM("to-do", "in_progress", "done"),
       defaultValue: "to-do",
-      allowNull:false,
+      allowNull: false,
     },
     projectId: {
       type: DataTypes.INTEGER,
@@ -40,7 +46,7 @@ const Task = sequelize.define(
   }
 );
 
-// each project has task/s
+
 Project.hasMany(Task, { foreignKey: "projectId", onDelete: "CASCADE" });
 Task.belongsTo(Project, { foreignKey: "projectId" });
 

@@ -9,7 +9,6 @@ export const protect = asyncHandler(async (req, res, next) => {
   }
 
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  console.log("Decoded Token:", decoded);
   req.user = decoded;
   next();
 });

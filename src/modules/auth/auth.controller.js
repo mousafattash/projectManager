@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../../../db/models/index.js";
 import { registerValidation, loginValidation } from "./auth.validation.js";
 import { asyncHandler } from "../../middleware/catchError.js";
+import { sendWelcomeEmail } from "../../utils/sendEmail.js"
 
 export const register =asyncHandler( async (req, res) => {
   const { error } = registerValidation(req.body);
@@ -21,7 +22,7 @@ export const register =asyncHandler( async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = await User.create({ username, email, password: hashedPassword });
 
-
+  await sendWelcomeEmail(newUser.email, newUser.username);
   res.status(201).json({ message: "User registered successfully" });
 });
 
@@ -39,9 +40,9 @@ export const login = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Invalid credentials" });
   }
 
-  // Create and sign JWT token with the user's ID
+  
   const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, {
-    expiresIn: "1h",  // Optional: Set the token expiration time
+    expiresIn: "1h",  
   });
 
   res.json({ message: "Login successful", token });

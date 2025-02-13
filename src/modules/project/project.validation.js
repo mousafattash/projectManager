@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-// Validation schema for creating a project
+
 export const createProjectValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
@@ -12,7 +12,7 @@ export const createProjectValidation = (data) => {
   return schema.validate(data);
 };
 
-// Validation schema for updating a project
+
 export const updateProjectValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().min(3).optional(),
