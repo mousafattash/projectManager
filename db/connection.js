@@ -1,16 +1,25 @@
-// db/connection.js
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
 import { asyncHandler } from "../src/middleware/catchError.js";
 
 dotenv.config();
-// console.log("DB_PASS:", process.env.DB_PASS);
 
-export const sequelize = new Sequelize("freedb_projectsmanager", "freedb_mousa", "pmfwG4G*XHasBG?", {
-  host: "sql.freedb.tech",
-  dialect: "mysql",
-  port: 3306,
-});
+export const sequelize = new Sequelize(
+  "neondb", // Database name
+  "neondb_owner", // Username
+  "npg_ng8U4Wphoswq", // Password
+  {
+    host: "ep-restless-morning-a80prz0x-pooler.eastus2.azure.neon.tech",
+    dialect: "postgres",
+    port: 5432, // Default PostgreSQL port
+    dialectOptions: {
+      ssl: {
+        require: true, // Required for Neon DB
+        rejectUnauthorized: false, // Allows self-signed certificates
+      },
+    },
+  }
+);
 
 export const connectDB = asyncHandler(async () => {
   await sequelize.authenticate();
