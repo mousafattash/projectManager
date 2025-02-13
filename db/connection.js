@@ -9,6 +9,7 @@ dotenv.config();
 export const sequelize = new Sequelize("freedb_projectsmanager", "freedb_mousa", "pmfwG4G*XHasBG?", {
   host: "sql.freedb.tech",
   dialect: "mysql",
+  port: 3306,
 });
 
 export const connectDB = asyncHandler(async () => {
